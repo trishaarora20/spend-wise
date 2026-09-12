@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SpendWise</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            💰 SpendWise
+        </div>
+
+
+        <nav>
+
+            <a class="active">
+                📊 Dashboard
+            </a>
+
+            <a>
+                💳 Transactions
+            </a>
+
+            <a>
+                📈 Analytics
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <p>
+                Smart spending starts here.
+            </p>
+
+            <a href="{{ url_for('logout') }}"
+               class="logout-btn">
+
+                🚪 Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Good day 👋
+                </h1>
+
+                <p>
+                    Here's your money overview.
+                </p>
+
+            </div>
+
+
+            <button class="add-btn"
+                    onclick="openModal()">
+
+                + Add Transaction
+
+            </button>
+
+        </header>
+
+
+
+        <!-- SUMMARY -->
+
+        <section class="summary">
+
+
+            <div class="card">
+
+                <p>
+                    💰 Total IN
+                </p>
+
+                <h2 id="total-in">
+                    ₹0
+                </h2>
+
+            </div>
+
+
+
+            <div class="card">
+
+                <p>
+                    💸 Total OUT
+                </p>
+
+                <h2 id="total-out">
+                    ₹0
+                </h2>
+
+            </div>
+
+
+
+            <div class="card">
+
+                <p>
+                    💵 Balance
+                </p>
+
+                <h2 id="balance">
+                    ₹0
+                </h2>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- DASHBOARD GRID -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- CATEGORIES -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>
+                        Spending by Category
+                    </h3>
+
+                    <p>
+                        Where your money goes
+                    </p>
+
+                </div>
+
+
+                <div id="category-list"
+                     class="category-list">
+
+                    <p class="empty">
+                        No transactions yet.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CHART -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>
+                        Spending Activity
+                    </h3>
+
+                    <p>
+                        Your recent spending
+                    </p>
+
+                </div>
+
+
+                <div id="chart"
+                     class="chart">
+
+                    <p class="empty">
+                        Add transactions to see your activity.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- TRANSACTIONS -->
+
+        <section class="panel transactions-panel">
+
+
+            <div class="panel-header">
+
+                <h3>
+                    Recent Transactions
+                </h3>
+
+                <p>
+                    Your latest money movements
+                </p>
+
+            </div>
+
+
+            <div id="transaction-list">
+
+                <p class="empty">
+                    No transactions added yet.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- ADD TRANSACTION MODAL -->
+
+<div id="expense-modal"
+     class="modal">
+
+
+    <div class="modal-box">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Add Transaction
+            </h2>
+
+            <button onclick="closeModal()">
+                ×
+            </button>
+
+        </div>
+
+
+
+        <form id="expense-form">
+
+
+            <!-- TYPE -->
+
+            <label>
+                Transaction Type
+            </label>
+
+
+            <div class="transaction-type">
+
+
+                <label class="type-option">
+
+                    <input
+                        type="radio"
+                        name="transaction-type"
+                        value="IN"
+                        checked
+                    >
+
+                    <span>
+                        🟢 IN
+                    </span>
+
+                </label>
+
+
+
+                <label class="type-option">
+
+                    <input
+                        type="radio"
+                        name="transaction-type"
+                        value="OUT"
+                    >
+
+                    <span>
+                        🔴 OUT
+                    </span>
+
+                </label>
+
+
+            </div>
+
+
+
+            <!-- DESCRIPTION -->
+
+            <label>
+                Description
+            </label>
+
+
+            <input
+                type="text"
+                id="title"
+                placeholder="e.g. Pocket Money"
+                required
+            >
+
+
+
+            <!-- AMOUNT -->
+
+            <label>
+                Amount
+            </label>
+
+
+            <input
+                type="number"
+                id="amount"
+                placeholder="e.g. 500"
+                min="1"
+                required
+            >
+
+
+
+            <!-- CATEGORY -->
+
+            <label>
+                Category
+            </label>
+
+
+            <select id="category"
+                    required>
+
+
+                <option value="">
+                    Select category
+                </option>
+
+
+                <option value="Pocket Money">
+                    💰 Pocket Money
+                </option>
+
+
+                <option value="Food">
+                    🍔 Food
+                </option>
+
+
+                <option value="Transport">
+                    🚕 Transport
+                </option>
+
+
+                <option value="Shopping">
+                    🛍️ Shopping
+                </option>
+
+
+                <option value="Education">
+                    📚 Education
+                </option>
+
+
+                <option value="Entertainment">
+                    🎬 Entertainment
+                </option>
+
+
+                <option value="Other">
+                    📦 Other
+                </option>
+
+
+            </select>
+
+
+
+            <!-- SAVE -->
+
+            <button
+                type="submit"
+                class="save-btn">
+
+                Save Transaction
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- MOBILE NAV -->
+
+<div class="mobile-nav">
+
+
+    <a href="#"
+       class="active">
+
+        <span class="nav-icon">
+            🏠
+        </span>
+
+        Home
+
+    </a>
+
+
+    <a href="#"
+       onclick="openModal()">
+
+        <span class="nav-icon">
+            💸
+        </span>
+
+        Add
+
+    </a>
+
+
+    <a href="#">
+
+        <span class="nav-icon">
+            📊
+        </span>
+
+        Analytics
+
+    </a>
+
+
+    <a href="{{ url_for('logout') }}">
+
+        <span class="nav-icon">
+            👤
+        </span>
+
+        Logout
+
+    </a>
+
+
+</div>
+
+
+
+<script src="{{ url_for('static', filename='js/script.js') }}">
+</script>
+
+
+</body>
+
+</html>
